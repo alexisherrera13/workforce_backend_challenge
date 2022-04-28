@@ -1,0 +1,24 @@
+<h1>Adnat</h1>
+<h2>Log In</h2>
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+<br/>
+<%= form_with(scope: :session, url:login_path) do |f|%>
+  <div>
+  <%= f.label :email_address%>
+  <br/>
+  <%= f.email_field :email_address, class:"form-control"%>
+  </div>
+
+  <div>
+  <%= f.label :password%>
+  <br/>
+  <%= f.password_field :password, class:"form-control"%>
+  </div>
+
+  <%= f.submit "login"%>
+<% end %>
+<p> <%= link_to 'Sign Up', {:controller => 'users', :action => 'new'}%> </p>
