@@ -11,4 +11,9 @@ Rails.application.routes.draw do
   get "logout" => "sessions#destroy"
   get "join/:id/:organisation_id" => "users#join"
   get "leave/:id" => "users#leave"
+  get "search" => "shifts#index"
+  get "password/reset" => "password_reset#new"
+  post "password/reset" => "password_reset#create"
+  get "password/reset/edit" => "password_reset#edit"
+  patch "password/reset/edit" => "password_reset#update"
 end
