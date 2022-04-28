@@ -1,0 +1,13 @@
+<%= form_with model:@organisation do |f|%>
+  <div>
+  <%= f.label :name%>
+  <br/>
+  <%= f.text_field :name, id: :organisation_name%>
+  </div>
+  <div>
+  <%= f.label :hourly_rate%>
+  <br/>
+  <%= f.number_field :hourly_rate, step: 0.01,  id: :organisation_hourly_rate%>
+  </div>
+  <%=f.submit%>
+<%end%> 

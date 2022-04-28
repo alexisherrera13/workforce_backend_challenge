@@ -21,11 +21,30 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update!(user_params)
-      flash[:notice] = "user created successfully"
+      flash[:notice] = "user updated"
       redirect_to controller: :organisations, action: :index
     else
       render "new"
     end
+  end
+
+  def join
+    @user = User.find(params[:id])
+    if params[:organisation_id].present?
+      @user.organisation = Organisation.find(params[:organisation_id])
+      @user.save!
+      redirect_to controller: :organisations, action: :index
+    else
+      redirect_to controller: :organisations, action: :index
+    end
+  end
+
+  def leave
+    @user = User.find(params[:id])
+    @user.organisation = nil
+    @user.shifts.destroy_all
+    @user.save!
+    redirect_to controller: :organisations, action: :index
   end
 
   private

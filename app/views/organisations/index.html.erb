@@ -1,0 +1,19 @@
+
+<%if !current_user.organisation%>
+  <p>You aren't in any Organisations, create one or join one</p>
+  <h2>Organisations</h2>
+  <ul id="organisations">
+    <% @organisations.each do |o|%>
+    <li>
+      <%=o.name%>
+      <%=link_to "edit", {:controller => "organisations", :action => "edit", :id => o.id}%>
+      <%=link_to "join", {:controller => "users", :action => "join", :id => current_user.id, :organisation_id => o.id}%>
+    </li>
+    <%end%>
+  </ul>
+  <h2> <%=link_to "Create Organisation", {:controller => "organisations", :action => "new"}%> </h2>
+<%else%>
+  <h2><%=current_user.organisation.name%></h2>
+  <p><%= link_to "Edit", {:controller => "organisations", :action => "edit", :id => current_user.organisation.id}%></p>
+  <p> <%= link_to "Leave", {:controller => "users", :action => "leave", :id => current_user.id}%> </p>
+<%end%>
