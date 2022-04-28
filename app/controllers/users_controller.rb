@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
-    if @user.save!
+    if @user.save
       flash[:notice] = "user created successfully"
       session[:user_id] = @user.id
       redirect_to controller: :organisations, action: :index
@@ -20,11 +20,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update!(user_params)
+    if @user.update(user_params)
       flash[:notice] = "user updated"
       redirect_to controller: :organisations, action: :index
     else
-      render "new"
+      render "edit"
     end
   end
 

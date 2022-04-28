@@ -1,19 +1,24 @@
-<%= form_with model: @shift do |f|%>
+<%= form_with model: @shift do |form|%>
+  <% if form.object.errors.any?%>
+     <% form.object.errors.full_messages.each do |msg|%>
+      <h3> <%= msg%> </h3>
+     <%end%>
+  <%end%>
   <div>
-    <%= f.label :shift_date%>
-    <%= f.date_field :shift_date%>
+    <%= form.label :shift_date%>
+    <%= form.date_field :shift_date%>
   </div>
   <div>
-    <%= f.label :start_time%>
-    <%= f.time_field :start_time%>
+    <%= form.label :start_time%>
+    <%= form.time_field :start_time%>
   </div>
   <div>
-    <%= f.label :finsh_time%>
-    <%= f.time_field :finish_time%>
+    <%= form.label :finsh_time%>
+    <%= form.time_field :finish_time%>
   </div>
   <div>
-    <%= f.label :break_length, "Break length (in Minutes)"%>
-    <%= f.number_field :break_length%>
+    <%= form.label :break_length, "Break length (in Minutes)"%>
+    <%= form.number_field :break_length%>
   </div>
-  <%=f.submit%>
+  <%=form.submit%>
 <%end%>

@@ -1,28 +1,34 @@
 
-<%= form_with model: @user do |f|%>
+<%= form_with model: @user do |form|%>
+  <% if form.object.errors.any?%>
+     <% form.object.errors.full_messages.each do |msg|%>
+      <h3> <%= msg%> </h3>
+     <%end%>
+  <%end%>
+
   <div>
-    <%= f.label :name, "Name"%>
+    <%= form.label :name, "Name"%>
     <br/>
-    <%= f.text_field :name, id: :user_name%>
+    <%= form.text_field :name, id: :user_name%>
   </div>
   
   <div>
-    <%= f.label :email_address%>
+    <%= form.label :email_address%>
     <br/>
-    <%= f.email_field :email_address, id: :user_email_address%>
+    <%= form.email_field :email_address, id: :user_email_address%>
   </div>
   
   <div>
-    <%= f.label :password%>
+    <%= form.label :password%>
     <br/>
-    <%= f.password_field :password%>
+    <%= form.password_field :password%>
   </div>
   
   <div>
-    <%= f.label :password_confirmation%>
+    <%= form.label :password_confirmation%>
     <br/>
-    <%= f.password_field :password_confirmation%>
+    <%= form.password_field :password_confirmation%>
   </div>
   <br/>
-  <%= f.submit %>
+  <%= form.submit %>
 <%end%>
