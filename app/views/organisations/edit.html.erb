@@ -1,1 +1,8 @@
+<%= render "shared/header"%>
 <%=render "form", locals: {organisation: @organisation}%>
+<%= link_to 'Delete', 
+  { controller: "organisations", action: "destroy", id: @organisation.id }, 
+  data: { confirm: 'Are you sure?' }, 
+  method: :delete %>
+  <br/>
+<%= link_to "Back", {:controller => :organisations, :action => "index"}%>

@@ -1,0 +1,49 @@
+<%= render "shared/header"%>
+<h1> <%= current_user.organisation.name%> </h1>
+<h2>shifts</h2>
+<% @new_shifts = @shifts.filter {|shift| shift.user.organisation === current_user.organisation}%>
+<%= form_with url: "/shifts", method: :get do |f|%>
+<%= f.label :query_name, "Search for:"%>
+<%= f.text_field :query_name%>
+<%= f.date_field :query_starts_at%>
+<%= f.date_field :query_ends_at%>
+<%= f.submit "search"%>
+<%end%>
+<table>
+  <thead>
+   <tr>
+      <th>Employee Name</th>
+      <th>Shift Date</th>
+      <th>Start Time</th>
+      <th>Finish Time</th>
+      <th>Break Length (minutes)</th>
+      <th>Hours Worked</th>
+      <th>Shift Cost</th>
+   </tr>
+  </thead>
+  <tbody>
+    <% @new_shifts.each do |s|%>
+      <tr>
+        <td> <%= s.user.name%> </td>
+        <td> <%= s.start.strftime("%D")%> </td>
+        <td> <%= s.start.strftime("%r")%> </td>
+        <td> <%= s.finish.strftime("%r")%> </td>
+        <td> <%= s.break_length%> </td>
+        <% 
+        total_hours = ((s.finish.to_time - s.start.to_time) / 1.hour).to_f
+        breaklength = s.break_length / 60.to_f
+        hours_worked = (total_hours - breaklength)
+        shift_cost = hours_worked * s.user.organisation.hourly_rate
+        %>
+        <td> <%=sprintf('%.1f', hours_worked)%> </td>
+        <%
+        %>
+        <td> <%=number_to_currency(shift_cost, :unit => "$")%> </td>
+        <td> <%= link_to 'delete', { controller: "shifts", action: "destroy", id: s.id }, data: { confirm: 'Are you sure?' }, method: :delete %> </td>
+        <td> <%= link_to "edit", {:controller => "shifts", action: "edit", id: s.id}%> </td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+<h3> <%= link_to "Create A Shift", {:controller => 'shifts', :action => 'new'}%> </h3>
+<%= link_to "Back", {:controller => 'organisations', :action => 'index'}%>

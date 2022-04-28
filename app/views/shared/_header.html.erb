@@ -1,0 +1,2 @@
+<h1> <%=link_to "Adnat", {:controller => "organisations", :action => "index"}%> </h1>
+<p>Logged in as <%=current_user.name%> <%=link_to "logout", logout_path%> <%=link_to "edit", {:controller => "users", :action => "edit", :id => current_user.id}%> </p>
