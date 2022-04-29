@@ -1,5 +1,6 @@
 class ShiftsController < ApplicationController
   def index
+    require_user
     if params[:query_name].present? && params[:query_starts_at].present? && params[:query_ends_at].present?
       @shifts = @shifts = Shift.joins(:user).where("name LIKE ? ", params[:query_name]).where("start BETWEEN ? AND ?", params[:query_starts_at], params[:query_ends_at]).order(start: :desc)
     elsif params[:query_starts_at].present? && params[:query_ends_at]
@@ -20,6 +21,7 @@ class ShiftsController < ApplicationController
   end
 
   def create
+    require_user
     @shift = Shift.new(shift_params)
     @shift.user_id = current_user.id
     if @shift.save!
@@ -35,15 +37,17 @@ class ShiftsController < ApplicationController
   end
 
   def update
+    require_user
     @shift = Shift.find(params[:id])
-    if @shift.update!(shift_params)
+    if @shift.update(shift_params)
       redirect_to :action => "index"
     else
-      redirect_to :action => "edit"
+      render "edit"
     end
   end
 
   def destroy
+    require_user
     @shift = Shift.find(params[:id]).destroy
     redirect_to :action => "index"
   end

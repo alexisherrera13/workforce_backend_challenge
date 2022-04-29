@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    require_user
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "user updated"
@@ -29,6 +30,7 @@ class UsersController < ApplicationController
   end
 
   def join
+    require_user
     @user = User.find(params[:id])
     if params[:organisation_id].present?
       @user.organisation = Organisation.find(params[:organisation_id])
@@ -40,6 +42,7 @@ class UsersController < ApplicationController
   end
 
   def leave
+    require_user
     @user = User.find(params[:id])
     @user.organisation = nil
     @user.shifts.destroy_all

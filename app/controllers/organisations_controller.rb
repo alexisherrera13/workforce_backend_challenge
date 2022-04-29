@@ -1,17 +1,19 @@
 class OrganisationsController < ApplicationController
   def index
+    require_user
     @organisations = Organisation.all
   end
 
-  def show
-    @organisation = Organisation.find(params[:id])
-  end
+  # def show
+  #   @organisation = Organisation.find(params[:id])
+  # end
 
   def new
     @organisation = Organisation.new
   end
 
   def create
+    require_user
     @organisation = Organisation.new(organisation_params)
     if @organisation.save!
       flash[:notice] = "organisation created"
@@ -26,6 +28,7 @@ class OrganisationsController < ApplicationController
   end
 
   def update
+    require_user
     @organisation = Organisation.find(params[:id])
     if @organisation.update!(organisation_params)
       flash[:notice] = "organisation updated"
@@ -36,6 +39,7 @@ class OrganisationsController < ApplicationController
   end
 
   def destroy
+    require_user
     @organisation = Organisation.find(params[:id])
     @organisation.destroy
     redirect_to action: "index"
