@@ -12,11 +12,8 @@ class ShiftsController < ApplicationController
     end
   end
 
-  def show
-    @shift = Shift.find(params[:id])
-  end
-
   def new
+    require_user
     @shift = Shift.new
   end
 
@@ -24,7 +21,7 @@ class ShiftsController < ApplicationController
     require_user
     @shift = Shift.new(shift_params)
     @shift.user_id = current_user.id
-    if @shift.save!
+    if @shift.save
       flash[:notice] = "shift created!"
       redirect_to :action => "index"
     else
@@ -33,6 +30,7 @@ class ShiftsController < ApplicationController
   end
 
   def edit
+    require_user
     @shift = Shift.find(params[:id])
   end
 

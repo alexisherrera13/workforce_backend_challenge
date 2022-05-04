@@ -11,4 +11,8 @@ class Shift < ApplicationRecord
     self.start = DateTime.parse("#{shift_date} #{start_time}")
     self.finish = DateTime.parse("#{shift_date} #{finish_time}")
   end
+
+  validates :start, presence: true
+  validates :finish, presence: true
+  validates :break_length, presence: true
 end

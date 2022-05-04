@@ -4,18 +4,15 @@ class OrganisationsController < ApplicationController
     @organisations = Organisation.all
   end
 
-  # def show
-  #   @organisation = Organisation.find(params[:id])
-  # end
-
   def new
+    require_user
     @organisation = Organisation.new
   end
 
   def create
     require_user
     @organisation = Organisation.new(organisation_params)
-    if @organisation.save!
+    if @organisation.save
       flash[:notice] = "organisation created"
       redirect_to action: "index"
     else
@@ -24,13 +21,14 @@ class OrganisationsController < ApplicationController
   end
 
   def edit
+    require_user
     @organisation = Organisation.find(params[:id])
   end
 
   def update
     require_user
     @organisation = Organisation.find(params[:id])
-    if @organisation.update!(organisation_params)
+    if @organisation.update(organisation_params)
       flash[:notice] = "organisation updated"
       redirect_to action: "index"
     else

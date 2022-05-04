@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    require_user
     @user = User.find(params[:id])
   end
 
